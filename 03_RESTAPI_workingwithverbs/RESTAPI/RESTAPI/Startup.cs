@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using RESTAPI.Services;
+using RESTAPI.Services.Implementations;
 
 namespace RESTAPI
 {
@@ -27,6 +29,9 @@ namespace RESTAPI
         {
 
             services.AddControllers();
+
+            //Injeção de dependencia
+            services.AddScoped<IPersonService, PersonServiceImplementation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
