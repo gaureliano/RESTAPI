@@ -12,6 +12,6 @@ namespace RESTAPI.Business
 
         TokenVO ValidateCredentials(TokenVO token);
 
-        //bool RevokeToken(string userName);
+        bool RevokeToken(string username);
     }
 }

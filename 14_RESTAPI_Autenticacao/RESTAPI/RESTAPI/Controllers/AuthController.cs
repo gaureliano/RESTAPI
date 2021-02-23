@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RESTAPI.Business;
 using RESTAPI.Data.VO;
@@ -37,9 +38,20 @@ namespace RESTAPI.Controllers
         {
             if (tokenVo is null) return BadRequest("Ivalid client request");
             var token = _loginBusiness.ValidateCredentials(tokenVo);
-            if (token == null) return BadRequest("Ivalid client request");
+            if (token == null) return BadRequest("Ivalid client request token null");
             return Ok(token);
         }
+        [HttpGet]
+        [Route("revoke")]
+        [Authorize("Bearer")]
+        public IActionResult Revoke()
+        {
+            var username = User.Identity.Name;
+            var result = _loginBusiness.RevokeToken(username);
+            if (result == false) return BadRequest("Ivalid client request token null");
+            return NoContent();
+        }
+
 
     }
 }

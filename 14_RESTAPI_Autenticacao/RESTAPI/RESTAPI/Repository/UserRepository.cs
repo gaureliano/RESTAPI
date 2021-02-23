@@ -24,10 +24,19 @@ namespace RESTAPI.Repository
             var pass = ComputeHash(user.Password, new SHA256CryptoServiceProvider());
             return _context.Users.FirstOrDefault(u => (u.UserName == user.UserName) && (u.Password == pass));
         }
-        public User ValidateCredentials(string userName)
+        public User ValidateCredentials(string username)
         {
-            return _context.Users.SingleOrDefault(u => (u.UserName == userName));
+            return _context.Users.SingleOrDefault(u => (u.UserName == username));
         }
+        public bool RevokeToken(string username)
+        {
+            var user = _context.Users.SingleOrDefault(u => (u.UserName == username));
+            if (user is null) return false;
+            user.RefreshToken = null;
+            _context.SaveChanges();
+            return true;
+        }
+
 
         public User RefreshUserInfo(User user)
         {
@@ -57,5 +66,6 @@ namespace RESTAPI.Repository
             return BitConverter.ToString(hashedBytes);
         }
 
+        
     }
 }

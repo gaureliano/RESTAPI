@@ -11,9 +11,9 @@ namespace RESTAPI.Repository
     {
         User ValidateCredentials(UserVO user);
 
-        User ValidateCredentials(string userName);
+        User ValidateCredentials(string username);
 
-        //bool RevokeToken(string username);
+        bool RevokeToken(string username);
 
         User RefreshUserInfo(User user);
         
